@@ -1,4 +1,5 @@
 import time
+import json
 
 def mac(pattern_data, filter_data):
     score = 0.0
@@ -59,6 +60,11 @@ def header(title, comment="", length=42):
         print(comment)
         print("-"*length)
 
+def load_json():
+    with open("data.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+    return data
+
 def main():
     while True:
         mode = mode_selection()
@@ -83,7 +89,16 @@ def main():
             print("판정:", result)
 
         elif mode == 2:
-            print("아직 지원하지 않음.")
+            data = load_json()
+            filters = data["filters"]
+            patterns = data["patterns"]
+            for key, value in patterns.items():
+                print(key)
+                print(value["expected"])
+
+    with open("data.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+    return data
 
 if __name__ == "__main__":
     main()
